@@ -1,8 +1,7 @@
 Delimiter $$
 drop procedure if exists insert_historiaClinica $$
 create procedure insert_historiaClinica(
-xid_historia int,
-xid_intervercion int,
+xid_intervencion int,
 xfecha_intervencion date,
 xid_unidad int, 
 xid_medico int, 
@@ -33,16 +32,18 @@ begin
     WHERE PACIENTE.ID_PACIENTE = xid_paciente;
 	
     start transaction;
-    insert into historia_clinica(id_historia,id_intervencion, fecha_intervencion,
+    insert into historia_clinica(id_intervencion, fecha_intervencion,
     id_unidad, id_medico, id_paciente, id_sintoma, id_tratamiento)
-    values (pid_historia, pid_intervencion, pfecha_intervencion, pid_unidad,
-    pid_medico, pid_paciente, pid_sintoma, pid_tratamiento);
+    values (xid_intervencion, xfecha_intervencion, xid_unidad,
+    xid_medico, xid_paciente, xid_sintoma, xid_tratamiento);
     commit; -- insert historia clinica
     
     SELECT 'HISTORIA CLINICA GRABADA' AS 'RESULT';
     
     END $$
     
-CALL insert_historiaClinica(9, 2, '2025-04-11', 2, 2, 4, 2, 2);
+CALL insert_historiaClinica(3, '2025-04-11', 1, 1, 4, 1, 1);
 
-SELECT * FROM HISTORIA_CLINICA WHERE ID_HISTORIA = 1;
+SELECT * FROM HISTORIA_CLINICA;
+ALTER TABLE historia_clinica AUTO_INCREMENT = 1;
+select * from historia_clinica
