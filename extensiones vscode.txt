@@ -1,0 +1,5 @@
+MySQL
+MySQL Syntax
+mysql-inline-decorator
+PHP Intelephense
+  git config --global alias.ag 'add .'

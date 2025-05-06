@@ -25,15 +25,17 @@ $objBD->set_charset("utf8");
 $objBD -> real_query("SELECT * FROM cliente ORDER BY id_cliente DESC" );
 $resultado = $objBD ->use_result();
 
-echo "Resultado_BD:<br> ";
+echo "<div class ='Probamos'>Resultado_BD:<br> ";
 while ($fila = $resultado ->fetch_assoc()){
     echo"cod: " . $fila["id_cliente"] . " - Nombre: " . $fila["nombre"] . "<br>";
 }
 
+echo "</div>";
 
 
 if(isset($_POST['register'])){
-    if(strlen($_POST['name']) >= 1){
+    $numero = (string)$_POST['numero'];
+    if(strlen($_POST['name']) >= 1 && strlen($numero) == 0){
         $nombre = trim($_POST['name']);
         $consulta = "INSERT INTO cliente(nombre) values ('$nombre')";
         $agg = mysqli_query($objBD,$consulta);
@@ -44,8 +46,8 @@ if(isset($_POST['register'])){
                 echo "<h3>Algo hiciste mal</h3>";
             }
         }
-    if(strlen($_POST['name1']) >= 1 && $_POST['numero'] >= 1){
-        $nombre = trim($_POST['name1']);
+    elseif(strlen($_POST['name']) >= 1 && $_POST['numero'] >= 0){
+        $nombre = trim($_POST['name']);
         $id = $_POST['numero'];
         $consulta = "UPDATE cliente SET nombre = '$nombre' where id_cliente ='$id'";
         $cambio = mysqli_query($objBD,$consulta);
