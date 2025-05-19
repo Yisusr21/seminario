@@ -1,18 +1,36 @@
 <?php
-include "config.php";
-include "includes/class.inc.php";
+include "autoload.php";
 
-$BD = new DateBase("localhost","root","","ejemplo1");
+$BD = new DateBase();
+$aDatos =[];
+$ObjModel = new CategoriasModel();
 
 if(!$BD->getEstadoConexion()){
     echo $BD->getMensajeError();
     exit;
 }
 
-$aDatos = $BD->getQuery("SELECT * FROM cliente ORDER BY id_cliente ASC");
-for ($i = 0; $i < sizeof($aDatos); $i++){
-    echo "cod:" . $aDatos[$i]["id_cliente"] . "Nombre: " .$aDatos[$i]["nombre"]. "<BR>";
+// $aDatos = $BD->getQuery("SELECT * FROM cliente ORDER BY id_cliente ASC");
+// for ($i = 0; $i < sizeof($aDatos); $i++){
+//     echo "cod: " . $aDatos[$i]["id_cliente"] . " - Nombre:" .$aDatos[$i]["nombre"]. "<BR>";
+// }
+
+
+$aResponse = $ObjModel->getAll();
+
+if (strcmp($aResponse["estado"],"ERROR") == 0){
+    echo "Error: " .$aResponse["mensaje"];
+    exit;
 }
+
+$aDatos = $aResponse["datos"];
+
+for ($i = 0; $i < sizeof($aDatos); $i++){
+    echo "cod: " . $aDatos[$i]["id_cliente"]
+    . "- Nombre: " . $aDatos[$i]["nombre"]. "<BR>";
+}
+
+
 
 
 $BD->close()
