@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-    <h1><a href="insert-categoria.php">Insert</a></h1>
+    <h1><a href="insert-cliente.php">Insert</a></h1>
     <h1><a href="modificar-model.php"> Update </a></h1>
     <h1><a href="index.php"> Index</a> </h1>
 </header>

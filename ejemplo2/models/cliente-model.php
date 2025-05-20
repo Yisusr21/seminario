@@ -1,7 +1,7 @@
 <?php
 
 class CategoriasModel {
-    public function getAll(){
+    /* public function getAll(){
         $aResponse = [];
         $sql = "SELECT * FROM cliente ORDER BY id_cliente ASC";
         $objDB = new Database();
@@ -77,10 +77,34 @@ class CategoriasModel {
         $aResponse["datos"] = $objDB->execute($sql);
         
         $objDB->close();
+        return $aResponse;} */
+        
+    public function get($xfilter = ""){
+        $aFilter = json_decode($xfilter, true);
+        $aResponse = [];
+        $sql = "SELECT * FROM cliente";
+
+        if(strcmp($aFilter["filter"], "")!=0){
+            $sql .= "WHERE {$aFilter ["filter"]} ";
+        }
+    $sql .= "ORDER BY id_cliente ASC";
+    
+    $objDB = new Database();
+
+    if (!$objDB->getEstadoConexion()){
+        $aResponse["estado"] = "error";
+        $aResponse["mensaje"] = $objDB->getEstadoConexion();
         return $aResponse;
-
-
     }
+    
+    $aResponse["estado"] = "success";
+    $aResponse["mensaje"] = "";
+    $aResponse["datos"] = $objDB->getQuery($sql);
+
+    $objDB->close();
+    return $aResponse;
+    }
+
 }
 
 

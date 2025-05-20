@@ -25,3 +25,4 @@ create table if not exists cliente (
     foreign key (id_articulo)references articulo(id_articulo)
     );
     
+SELECT * FROM cliente

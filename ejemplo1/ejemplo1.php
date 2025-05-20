@@ -30,6 +30,7 @@ while ($fila = $resultado ->fetch_assoc()){
     echo"cod: " . $fila["id_cliente"] . " - Nombre: " . $fila["nombre"] . "<br>";
 }
 
+
 echo "</div>";
 
 
