@@ -1,5 +1,5 @@
 <?php
-class Datebase {
+class Database {
     private $objDB;
     private $conexionOK;
     private $errorMessage;
