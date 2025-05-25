@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS SOCIO(
     PRIMARY KEY (id_socio)
 );
 
-SELECT * from socio;
+Select * from socio;

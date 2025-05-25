@@ -1,5 +1,4 @@
 <?php
-
 include "autoload.php";
 
 header("Access-Control-Allow-Origin: *");
@@ -20,9 +19,9 @@ $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 $aUrl = explode("/",$url);
 
 $metodo_a_ejecutar = $aUrl[sizeof($aUrl)-1];
-$Datos = file_get_contents("php://input");
+$datos = file_get_contents("php://input");
 
-$objModel = new CategoriasModel();
+$objModel = new Categoriasapi();
 $response = $objModel->{$metodo_a_ejecutar}($datos);
 echo json_encode($response);
 
