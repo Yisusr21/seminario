@@ -21,7 +21,7 @@ $aUrl = explode("/",$url);
 $metodo_a_ejecutar = $aUrl[sizeof($aUrl)-1];
 $datos = file_get_contents("php://input");
 
-$objModel = new Categoriasapi();
+$objModel = new clienteapi();
 $response = $objModel->{$metodo_a_ejecutar}($datos);
 echo json_encode($response);
 

@@ -77,7 +77,33 @@ class CategoriasModel {
         $aResponse["datos"] = $objDB->execute($sql);
         
         $objDB->close();
-        return $aResponse;}
+        return $aResponse;
+    }
+
+    public function delete($aDatos){
+        $aResponse = [];
+        
+        $sql = "DELETE from cliente ";
+
+        if(strcmp($aDatos["numero"],"") !=0 ){
+            
+            $sql.= "WHERE {$aDatos["numero"]} ";
+        }
+        $objDB = new Database();
+
+        if (!$objDB->getEstadoConexion()){
+            $aResponse["estado"] = "error";
+            $aResponse["mensaje"] = $objDB->getEstadoConexion();
+            return $aResponse;
+        }
+        $aResponse["estado"] = "success";
+        $aResponse["mensaje"] = "El cliente se elimino";
+        $aResponse["datos"] = $objDB->execute($sql);
+        
+        $objDB->close();
+        return $aResponse;
+    
+    }
 }
 
 

@@ -10,7 +10,7 @@ $response =[];
 
 if (strcmp($_SERVER["REQUEST_METHOD"], "POST")!= 0){
     $response["estado"] = "Error de solicitud";
-    $response["mensaje"] = "Metodo soportado";
+    $response["mensaje"] = "Metodo no soportado";
     echo json_encode($response);
     exit();
 }
