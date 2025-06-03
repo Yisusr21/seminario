@@ -3,6 +3,6 @@
 include "../cliente/config.php";
 include "../cliente/includes/class.inc.php";
 include "models/socio-model.php";
-include "models/socioapi.php"
+include "models/socioapi.php";
 
 ?>
