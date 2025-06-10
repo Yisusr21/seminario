@@ -19,9 +19,9 @@ create table if not exists articulo(
 );
 
 create table if not exists revista_articulo(
-    cod_revista int not null unique,
-    numero int not null unique,
-    id_articulo int not null unique,
+    cod_revista int not null,
+    numero int not null,
+    id_articulo int not null,
     primary key (cod_revista, numero, id_articulo),
     Foreign Key (cod_revista, numero) REFERENCES revista(cod_revista, numero),
     Foreign Key (id_articulo) REFERENCES articulo(id_articulo)
@@ -43,12 +43,11 @@ create table if not exists nacionalidad(
 );
 
 create table if not exists articulo_autor(
-    cod_autor int not null unique,
-    id_articulo int not null unique,
-    posicion_autor int not null unique,
+    cod_autor int not null,
+    id_articulo int not null,
+    posicion_autor int not null,
     primary key (cod_autor, id_articulo),
     Foreign Key (id_articulo) REFERENCES articulo(id_articulo),
     Foreign Key (cod_autor) REFERENCES autor(cod_autor)
 );
-
 
