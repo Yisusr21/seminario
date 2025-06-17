@@ -5,7 +5,7 @@ drop procedure if exists update_revista $$
 create procedure update_revista(
     xcod_revista int,
     xnumero int,
-    xtitulo varchar(50),
+    xtitulo_revista varchar(50),
     xfecha_publicacion date
 )
 begin
@@ -19,14 +19,13 @@ begin
     start transaction;
     update revista
     set revista.numero = xnumero,
-    revista.titulo = xtitulo,
+    revista.titulo_revista = xtitulo_revista,
     revista.fecha_publicacion = xfecha_publicacion
     where cod_revista = xcod_revista;
-    select 'Actulizamos revista' as 'RESULT';
     commit;
 end $$
 delimiter ;
 
-CALL update_revista(3,203,'modificamos call', '2025-07-08');
+CALL update_revista(1,203,'modificamos calleee', '2025-07-08');
 
 select * from revista

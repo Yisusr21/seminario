@@ -4,7 +4,7 @@ use diario;
 create table if not exists revista(
     cod_revista INT NOT NULL UNIQUE AUTO_INCREMENT,
     numero int not null,
-    titulo varchar(50) not null,
+    titulo_revista varchar(50) not null,
     fecha_publicacion DATE,
 
     PRIMARY KEY(cod_revista, numero)
@@ -12,7 +12,7 @@ create table if not exists revista(
 
 create table if not exists articulo(
     id_articulo int not null unique AUTO_INCREMENT,
-    titulo varchar(50) not null unique,
+    titulo_articulo varchar(50) not null unique,
     pagina_inicio INT,
     pagina_fin INT,
     PRIMARY key (id_articulo)
@@ -50,4 +50,6 @@ create table if not exists articulo_autor(
     Foreign Key (id_articulo) REFERENCES articulo(id_articulo),
     Foreign Key (cod_autor) REFERENCES autor(cod_autor)
 );
+
+select * from revista
 

@@ -1,9 +1,9 @@
 delimiter $$
 
-drop procedure if exists get_revista $$
+drop procedure if exists get_articulo $$
 
-create procedure get_revista(
-    xcod_revista int
+create procedure get_articulo(
+    xid_articulo int
 )
 begin
     declare mensaje text;
@@ -15,12 +15,12 @@ begin
     end;
     start transaction;
     select *
-    from revista
-    where cod_revista = xcod_revista;
+    from articulo
+    where id_articulo = xid_articulo;
     commit;
 end $$
 delimiter ;
 
-CALL get_revista(4);
+CALL get_articulo(4);
 
-select * from revista
+select * from articulo

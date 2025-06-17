@@ -15,7 +15,7 @@ begin
     end;
     start transaction;
     delete from articulo where id_articulo = xid_articulo;
-    select 'Eliminamos revista' as 'RESULT';
+    select 'Eliminamos articulo' as 'RESULT';
     commit;
 end $$
 delimiter ;

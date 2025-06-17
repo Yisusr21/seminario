@@ -1,11 +1,11 @@
 delimiter $$
 
-drop procedure if exists insert_revista $$
+drop procedure if exists insert_articulo $$
 
-create procedure insert_revista(
-    xnumero int,
-    xtitulo varchar(50),
-    xfecha_publicacion date
+create procedure insert_articulo(
+    xtitulo_articulo varchar(50),
+    xpagina_inicio int,
+    xpagina_fin int
 )
 begin
     declare mensaje text;
@@ -16,13 +16,12 @@ begin
         select mensaje as 'RESULT';
     end;
     start transaction;
-    insert into revista(numero, titulo,fecha_publicacion)
-    values (xnumero,xtitulo,xfecha_publicacion);
-    select 'Ingramos una revista nueva' as 'RESULT';
+    insert into articulo(titulo_articulo,pagina_inicio,pagina_fin)
+    values (xtitulo_articulo,xpagina_inicio,xpagina_fin);
     commit;
 end $$
 delimiter ;
 
-CALL insert_revista(101, 'Ciencia y Tecnología', '2025-06-01');
+CALL insert_articulo('Buenas noches cachorrita', 200, 300);
 
 select * from articulo

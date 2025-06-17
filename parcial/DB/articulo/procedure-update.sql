@@ -1,11 +1,12 @@
 delimiter $$
 
-drop procedure if exists update_revista $$
+drop procedure if exists update_articulo $$
 
-create procedure update_revista(
-    xnumero int,
-    xtitulo varchar(50),
-    xfecha_publicacion date
+create procedure update_articulo(
+    xid_articulo int,
+    xtitulo_articulo varchar(50),
+    xpagina_inicio int,
+    xpagina_fin int
 )
 begin
     declare mensaje text;
@@ -16,12 +17,12 @@ begin
         select mensaje as 'RESULT';
     end;
     start transaction;
-    update revista
-    set revista.numero = xnumero,
-    revista.titulo = xtitulo,
-    revista.fecha_publicacion = xfecha_publicacion
-    where cod_revista = xcod_revista;
-    select 'Actulizamos revista' as 'RESULT';
+    update articulo
+    set articulo.titulo_articulo = xtitulo_articulo,
+    articulo.pagina_inicio = xpagina_inicio,
+    articulo.pagina_fin = xpagina_fin
+    where id_articulo = xid_articulo;
+    select 'Actulizamos articulo' as 'RESULT';
     commit;
 end $$
 delimiter ;

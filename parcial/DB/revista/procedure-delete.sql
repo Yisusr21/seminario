@@ -20,6 +20,6 @@ begin
 end $$
 delimiter ;
 
-CALL delete_revista(1);
+CALL delete_revista(2);
 
 select * from revista
