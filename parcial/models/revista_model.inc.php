@@ -135,5 +135,63 @@ public function update_r($xDatos) {
         $objDB->close(); //cierra conexion
         return $aResponse;
 }
+//cod_revista, numero, id_articulo
+public function insert_ra($xDatos){
+    $aDatos = json_decode($xDatos, true);
+    $aResponse = [];
+    $cod_revista = $aDatos["cod_revista"];
+    $numero = $aDatos["numero"];
+    $id_articulo = $aDatos["id_articulo"];
+
+    if (strcmp($cod_revista, "") && strcmp($numero, "") && strcmp($id_articulo, "") != 0){
+        $sql = "insert into revista_articulo(cod_revista, numero, id_articulo)
+        values ({$cod_revista}, {$numero}, {$id_articulo})";
+    }
+
+    else {
+        $aResponse["Mensaje"] = "Ingresa todos los valores para agregar el articulo en la revista";
+    }
+
+    $objDB = new database();
+
+    if (!$objDB->getEstadoConexion()){
+        $aResponse["estado"] = "ERROR";
+        $aResponse["mensaje"] = $objDB->getMensajeError();
+    }
+        $aResponse["estado"] = "success";
+        $aResponse["mensaje"] = "Has insertado un nuevo articulo en la revista numero {$numero}";
+        $aResponse["datos"] = $objDB->execute($sql);
+        $objDB->close(); //cierra conexion
+        return $aResponse;
+}
+public function update_ra($xDatos){
+    $aDatos = json_decode($xDatos, true);
+    $aResponse = [];
+    $cod_revista = $aDatos["cod_revista"];
+    $numero = $aDatos["numero"];
+    $id_articulo = $aDatos["id_articulo"];
+
+    if (strcmp($cod_revista, "") && strcmp($numero, "") && strcmp($id_articulo, "") != 0){
+        $sql = "update revista_articulo revista_articulo.id_articulo = {$id_articulo}
+        where cod_revista = {$cod_revista} and numero = {$numero}";
+    }
+
+    else {
+        $aResponse["Mensaje"] = "Ingresa todos los valores para agregar el articulo en la revista";
+    }
+
+    $objDB = new database();
+
+    if (!$objDB->getEstadoConexion()){
+        $aResponse["estado"] = "ERROR";
+        $aResponse["mensaje"] = $objDB->getMensajeError();
+    }
+        $aResponse["estado"] = "success";
+        $aResponse["mensaje"] = "Has insertado un nuevo articulo en la revista numero {$numero}";
+        $aResponse["datos"] = $objDB->execute($sql);
+        $objDB->close(); //cierra conexion
+        return $aResponse;
+}
+
 
 }

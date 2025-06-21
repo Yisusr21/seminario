@@ -51,5 +51,15 @@ create table if not exists articulo_autor(
     Foreign Key (cod_autor) REFERENCES autor(cod_autor)
 );
 
-select * from revista
+select * from articulo
 
+INSERT INTO articulo (titulo_articulo, pagina_inicio, pagina_fin) VALUES
+('Historia del deporte', 1, 5),
+('Ciencia del movimiento', 6, 12),
+('Educación física y salud', 13, 20);
+
+select * from revista_articulo;
+
+SELECT * FROM articulo;
+
+select * from revista
