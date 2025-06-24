@@ -1,11 +1,12 @@
 delimiter $$
 
-drop procedure if exists get_articulo $$
+drop procedure if exists insert_revista_articulo $$
 
-create procedure get_articulo(
+create procedure insert_revista_articulo(
+    xcod_revista int,
+    xnumero int,
     xid_articulo int
-)
-begin
+)begin
     declare mensaje text;
     declare exit handler for sqlexception
     begin
@@ -14,13 +15,10 @@ begin
         select mensaje as 'RESULT';
     end;
     start transaction;
-    select *
-    from articulo
-    where id_articulo = xid_articulo;
+    insert into revista_articulo(cod_revista,numero,id_articulo)
+    values (xcod_revista, xnumero, xid_articulo);
     commit;
 end $$
 delimiter ;
 
-CALL get_articulo(1);
 
-select * from articulo

@@ -27,6 +27,6 @@ begin
 end $$
 delimiter ;
 
-CALL update_revista(3,203,'modificamos call', '2025-07-08');
+CALL update_articulo(3,203,'modificamos call', '2025-07-08');
 
-select * from revista
+select * from articulo

@@ -22,6 +22,11 @@ begin
 end $$
 delimiter ;
 
-CALL insert_articulo('Buenas noches cachorrita', 200, 300);
+CALL insert_articulo('Este es un articulo de prueba', 200, 300);
+CALL insert_articulo('Introducción a la Inteligencia Artificial', 150, 100);
+CALL insert_articulo('El auge de las Energías Renovables', 250, 120);
+CALL insert_articulo('La revolución de los Autos Autónomos', 300, 200);
+CALL insert_articulo('Impacto del Cambio Climático en el Ártico', 220, 180);
+CALL insert_articulo('Historia del Desarrollo del Software', 180, 90);
 
 select * from articulo

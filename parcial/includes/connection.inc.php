@@ -5,6 +5,20 @@ class database{
     private $conexionOK;
     private $errorMessage;
 
+    function __construct(){
+        $this->objDB = new mysqli(host, user, pass, database);
+        if($this->objDB->connect_errno){
+            $this->errorMessage = "Error de conexcion: 
+            ({$this->objDB->connect_errno}) 
+            {$this->objDB->connect_error}";
+        $this->conexionOK = false;
+        }
+        else{
+            $this->conexionOK = true;
+            $this->objDB->set_charset("utf8");
+        }
+    }
+
     public function getEstadoConexion(){
         return $this->conexionOK;
     }
@@ -13,24 +27,10 @@ class database{
         return $this->errorMessage;
     }
 
-
-    function __construct(){
-        $this->objDB = new mysqli(host, user, pass, database);
-        if($this->objDB->connect_errno){
-            $this->errorMessage = "Error de conexcion: 
-            ({$this->objDB->connect_errno}) 
-            {$this->objDB->connect_error}";
-        }
-        else{
-            $this->conexionOK = true;
-            $this->objDB->set_charset("utf8");
-        }
-    }
-
-        public function getQuery($xsql){
+    public function getQuery($xsql){
         $this->objDB->real_query($xsql);
         $resultado = $this->objDB->use_result();
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+    return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     public function execute($xsql){

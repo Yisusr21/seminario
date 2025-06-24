@@ -1,11 +1,9 @@
 <?php
 // Modelo para la tabla revista
-
 class RevistaModel {
-    public function get_r($xfiltro="") { //metodo get
-        $aFilter = json_decode($xfiltro, true); //convertir json en array 
-        $aResponse = [];
-        $sql = "select * from revista"; //Si no se coloca ningun string en el json. La variable toma este valro
+    public function get($xfiltro="") { //metodo get
+        $aFilter = json_decode($xfiltro, true); //decodifica el json, a string y lo guarda en la variable 
+        $aResponse = []; //Si no se coloca ningun string en el json. La variable toma este valro
         $filtro = $aFilter["filtro"] ?? ""; // El "??" Significa que si el valor es null se usa ""
         $numero = $aFilter["numero"] ?? "";
 
@@ -17,15 +15,13 @@ class RevistaModel {
         $sql = "select * from revista where numero = {$numero}"; //Elseif Si la primera condicion no se cumple pasa a siguiente
 
         }
-        elseif(strcmp($filtro,"") ==0 && strcmp($numero, "") == 0){
+        elseif(strcmp($filtro,"") == 0 && strcmp($numero, "") == 0){
         $sql = "select * from revista";
         }
         else{
             $aResponse["Mensaje"] = "Por favor complete los campos";
         }
-        
         $objDB = new DataBase();
-
         if (!$objDB->getEstadoConexion()) {
             $aResponse["estado"] = "ERROR";
             $aResponse["mensaje"] = $objDB->getMensajeError();
@@ -41,23 +37,20 @@ class RevistaModel {
         return $aResponse;
 }
     // insertar nueva revista
-    public function insert_r($xDatos) {
+    public function insert($xDatos) {
         $aDatos = json_decode($xDatos, true);
         $numero = $aDatos['numero'];
-        $titulo = $aDatos['titulo'];
+        $titulo_revista = $aDatos['titulo_revista'];
         $fecha_publicacion = $aDatos['fecha_publicacion'];
-
         $aResponse = [];
 
-        if(strcmp($numero,"") != 0){
-            $sql = "CALL insert_revista('{$numero}' ,'{$titulo}' , '{$fecha_publicacion}')";
+        if(isset($numero)){                 //isset() - Si la varible viene es null retorna un false
+            $sql = "CALL insert_revista('{$numero}','{$titulo_revista}','{$fecha_publicacion}')";
         }
         else{
-            $aResponse ["Mensaje"] = "Completa todos los campos para ingresar una revista";
+            $aResponse ["mensaje"] = "Completa todos los campos para ingresar una revista";
         }
-
         //llamar al procedimiento
-        
         $objDB = new DataBase();
 
         // Verificar si la conexión a la base de datos fue exitosa
@@ -73,7 +66,7 @@ class RevistaModel {
         $objDB->close(); //cierra conexion
         return $aResponse;
 }
-public function delete_r($xDatos) {
+public function delete($xDatos) {
         $aDatos = json_decode($xDatos, true);
         $aResponse = [];
         $cod_revista = $aDatos['cod_revista'];
@@ -85,7 +78,7 @@ public function delete_r($xDatos) {
             $aResponse ["Mensaje"] = "Completa todos los campos para ingresar una revista";
         }
 
-        //llamar al procedimiento       
+        //inicia la instancia de la base de datos      
         $objDB = new DataBase();
 
         // Verificar si la conexión a la base de datos fue exitosa
@@ -102,7 +95,7 @@ public function delete_r($xDatos) {
         return $aResponse;
 }
 
-public function update_r($xDatos) {
+public function update($xDatos) {
         $aDatos = json_decode($xDatos, true);
         $aResponse = [];
 
@@ -112,11 +105,11 @@ public function update_r($xDatos) {
         $fecha_publicacion = $aDatos['fecha_publicacion'];
 
 
-        if(strcmp($cod_revista,"") != 0){
+        if(isset($cod_revista)){
             $sql = "CALL update_revista('{$cod_revista}','{$numero}','{$titulo}','{$fecha_publicacion}')";
         }
         else{
-            $aResponse ["Mensaje"] = "Completa todos los campos para ingresar una revista";
+            $aResponse ["Mensaje"] = "Completa todos los campos para actualizar una revista";
         }
 
         //llama a la base de datos      
@@ -135,63 +128,5 @@ public function update_r($xDatos) {
         $objDB->close(); //cierra conexion
         return $aResponse;
 }
-//cod_revista, numero, id_articulo
-public function insert_ra($xDatos){
-    $aDatos = json_decode($xDatos, true);
-    $aResponse = [];
-    $cod_revista = $aDatos["cod_revista"];
-    $numero = $aDatos["numero"];
-    $id_articulo = $aDatos["id_articulo"];
-
-    if (strcmp($cod_revista, "") && strcmp($numero, "") && strcmp($id_articulo, "") != 0){
-        $sql = "insert into revista_articulo(cod_revista, numero, id_articulo)
-        values ({$cod_revista}, {$numero}, {$id_articulo})";
-    }
-
-    else {
-        $aResponse["Mensaje"] = "Ingresa todos los valores para agregar el articulo en la revista";
-    }
-
-    $objDB = new database();
-
-    if (!$objDB->getEstadoConexion()){
-        $aResponse["estado"] = "ERROR";
-        $aResponse["mensaje"] = $objDB->getMensajeError();
-    }
-        $aResponse["estado"] = "success";
-        $aResponse["mensaje"] = "Has insertado un nuevo articulo en la revista numero {$numero}";
-        $aResponse["datos"] = $objDB->execute($sql);
-        $objDB->close(); //cierra conexion
-        return $aResponse;
-}
-public function update_ra($xDatos){
-    $aDatos = json_decode($xDatos, true);
-    $aResponse = [];
-    $cod_revista = $aDatos["cod_revista"];
-    $numero = $aDatos["numero"];
-    $id_articulo = $aDatos["id_articulo"];
-
-    if (strcmp($cod_revista, "") && strcmp($numero, "") && strcmp($id_articulo, "") != 0){
-        $sql = "update revista_articulo revista_articulo.id_articulo = {$id_articulo}
-        where cod_revista = {$cod_revista} and numero = {$numero}";
-    }
-
-    else {
-        $aResponse["Mensaje"] = "Ingresa todos los valores para agregar el articulo en la revista";
-    }
-
-    $objDB = new database();
-
-    if (!$objDB->getEstadoConexion()){
-        $aResponse["estado"] = "ERROR";
-        $aResponse["mensaje"] = $objDB->getMensajeError();
-    }
-        $aResponse["estado"] = "success";
-        $aResponse["mensaje"] = "Has insertado un nuevo articulo en la revista numero {$numero}";
-        $aResponse["datos"] = $objDB->execute($sql);
-        $objDB->close(); //cierra conexion
-        return $aResponse;
-}
-
 
 }
