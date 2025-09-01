@@ -14,7 +14,7 @@ class RevistaModel {
         elseif(strcmp($numero,"")!=0){
         $sql = "select * from revista where numero = {$numero}"; //Elseif Si la primera condicion no se cumple pasa a siguiente
 
-        }
+        }   
         elseif(strcmp($filtro,"") == 0 && strcmp($numero, "") == 0){
         $sql = "select * from revista";
         }
