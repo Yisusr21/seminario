@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CRUD REVISTA</title>
     <link rel="stylesheet" href="./css/style.css">
+    
     <!-- Bootstrap CSS -->
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+
 
 
 </head>
@@ -19,26 +23,26 @@
             <a class="navbar-brand">Coleccion de revista</a>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" id="buscador" placeholder="Buscar">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                <button class="btn btn-outline-success" type="button">Buscar</button>
             </form>
         </div>
     </nav>
     <form>
         <div class="row mb-3">
             <div class="col">
-                <label for="form-text" class="form-label">Numero</label>
-                <input type="number" class="form-control" id="textEmail1" placeholder="codigo revista">
+                <label for="form-text" class="form-label" required >Numero</label>
+                <input type="number" class="form-control" id="txtNumero" placeholder="numero">
             </div>
             <div class="col">
                 <label for="form-text" class="form-label">Titulo de revista</label>
-                <input type="text" class="form-control" id="textTitulo" placeholder="Titulo de Revista">
+                <input type="text" class="form-control" id="txtTitulo" placeholder="Titulo de Revista">
             </div>
             <div class="col">
                 <label for="form-text" class="form-label">Fecha Publicacion</label>
-                <input type="date" class="form-control" id="textEmail3" placeholder="codigo revista">
+                <input type="date" class="form-control" id="txtFecha" placeholder="codigo revista">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-5">Agregar</button>
+        <button type="button" class="btn btn-primary mb-5" id="btn-agg">Agregar</button>
 
     </form>
     <table class="table table-striped">
@@ -52,24 +56,46 @@
                 <th scope="col">Borrar</th>
             </tr>
         </thead>
-        <tbody class="p2">
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td><button class="btn"><i class="bi bi-pencil fs-5 btnw"></button></td>
-                <td><button class="btn"><i class="bi bi-trash3 fs-5 btnd"></i></button></td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td><button class="btn">
-                <i class="bi bi-pencil fs-5 btnw"></button></td>
-                <td><button class="btn"><i class="bi bi-trash3 fs-5 btnd"></i></button></td>
-            </tr>
+        <tbody class="p2" id="tabla-revista">
         </tbody>
+
+        <!-- MODAL -->
     </table>
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editar Revista</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarRevista">
+                        <input type="hidden" id="id-revista">
+                        <div class="mb-3">
+                            <label for="numero-editar" class="col-form-label">Número:</label>
+                            <input type="text" class="form-control" id="numero-editar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="titulo-editar" class="col-form-label">Título:</label>
+                            <input type="text" class="form-control" id="titulo-editar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha-editar" class="col-form-label">Fecha de publicación:</label>
+                            <input type="date" class="form-control" id="fecha-editar">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="guardarCambios">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </body>
