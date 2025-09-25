@@ -2,8 +2,8 @@
 const API_BASE = "../backend/api_revista.php/"
 
 async function revista_get() {
-    const endpoint = "get";
-    const url = API_BASE + endpoint;
+    const model = "get";
+    const url = API_BASE + model;
     const response = await fetch(url, { method: "POST" });
 
     if (!response.ok) {
@@ -41,10 +41,9 @@ document.addEventListener("DOMContentLoaded", revista_print);
 
 
 
-
 async function revista_editar(id, numero, titulo,fecha) {
-    const endpoint = "update";
-    url = API_BASE + endpoint;
+    const model = "update";
+    url = API_BASE + model;
 
     const response = await fetch(url, {
         method: "POST",
@@ -66,8 +65,8 @@ async function revista_editar(id, numero, titulo,fecha) {
 }
 
 async function revista_insert(numero, titulo,fecha) {
-    const endpoint = "insert";
-    url = API_BASE + endpoint;
+    const model = "insert";
+    url = API_BASE + model;
 
     const response = await fetch(url, {
         method: "POST",
@@ -89,6 +88,8 @@ async function revista_insert(numero, titulo,fecha) {
 
 async function eliminarApi(id) {
     console.log("Eliminamos " + id)
+    con
+
 }
 
 

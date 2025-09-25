@@ -9,9 +9,7 @@ async function editarRevista(id, numero, titulo, fecha) {
     modal.show();
 }
 
-document
-    .getElementById("guardarCambios")
-    .addEventListener("click", async () => {
+    document.getElementById("guardarCambios").addEventListener("click", async () => {
         const id = document.getElementById("id-revista").value.trim();
         const numero = document.getElementById("numero-editar").value.trim();
         const titulo = document.getElementById("titulo-editar").value.trim();
@@ -20,15 +18,15 @@ document
         if (!numero || !titulo || !fecha) {
             Swal.fire({
                 title: "¡Atención!",
-                text: "Completa todos los campos por favor.", // Texto descriptivo
-                icon: "warning", // Icono (opcional)
+                text: "Completa todos los campos por favor.",
+                icon: "warning",
                 confirmButtonText: "Hecho",
             });
             return;
         }
 
-        const resultado = await revista_editar(id, numero, titulo, fecha);
-
+        try {
+            const resultado = await revista_editar(id, numero, titulo, fecha);
         if (resultado.estado === "success") {
             Swal.fire({
                 title: "Revista actualizada",
@@ -43,44 +41,56 @@ document
             // refrescamos el print
             revista_print();
         } else {
-            alert("no hemos podido actualizar la revista");
+            alert("no hemos podido actualizar la revista");}}
+        catch (error){
+            console.error("Ocurrio un error",error);
+            Swal.fire("Error en la conexión", "Intenta nuevamente", "error");
         }
     });
+
+document.getElementById("btn-agg").addEventListener("click", insertarRevista);
 
 async function insertarRevista() {
-    const numeroInput = document.getElementById("txtNumero");
-    const tituloInput = document.getElementById("txtTitulo");
-    const fechaInput = document.getElementById("txtFecha");
+    const xnumero = document.getElementById("txtNumero");
+    const xtitulo = document.getElementById("txtTitulo");
+    const xfecha = document.getElementById("txtFecha");
 
-    document.getElementById("btn-agg").addEventListener("click", () => {
-        const numero = numeroInput.value.trim();
-        const titulo = tituloInput.value.trim();
-        const fecha = fechaInput.value.trim();
+    const numero = xnumero.value.trim();
+    const titulo = xtitulo.value.trim();
+    const fecha = xfecha.value.trim();
 
-        if (!numero || !titulo || !fecha) {
+    if (!numero || !titulo || !fecha) {
             Swal.fire({
                 title: "¡Atención!",
-                text: "Completa todos los campos por favor.", // Texto descriptivo
-                icon: "warning", // Icono (opcional)
+                text: "Completa todos los campos por favor.",
+                icon: "warning", 
                 confirmButtonText: "Hecho",
             });
-            return;
-        } else {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Guardaste la nueva revista",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-            revista_insert(numero,titulo,fecha) //llamamos a la funcion de la api
-            revista_print() //recargamos la pagina
         }
-    });
+    else{
+        try {
+        
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Guardaste la nueva revista",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        xnumero.value = "";
+        xtitulo.value = "";
+        xfecha.value = ""; 
+        await revista_insert(numero, titulo, fecha);
+        revista_print();
+    } catch (error) {
+        console.error("Error al insertar la revista:", error);
+        Swal.fire("Error en la conexión", "Intenta nuevamente", "error");
+    }}
 }
-document.addEventListener("DOMContentLoaded", insertarRevista); //Esto es para que la funcion se ejecute ni bien cargue el don
 
 async function eliminarRevista(xid) {
+    try{
     Swal.fire({
         title: "¿Estas seguro? ",
         text: "¿Estas seguro de eliminar la revista?" + xid,
@@ -97,7 +107,12 @@ async function eliminarRevista(xid) {
                 text: "La revista ha sido eliminada correctamente",
                 icon: "success",
             });
-            eliminarApi(xid)
+            eliminarApi(xid);
         }
     });
+    }
+    catch (error){
+        console.error("Error al borrar la revista", error)
+        Swal.fire("Error en la conexión", "Intenta nuevamente", "error");
+    }
 }
